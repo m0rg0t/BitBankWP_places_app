@@ -19,6 +19,14 @@
     shell:SystemTray.IsVisible="{Binding Loading}"
     shell:SystemTray.Opacity="0"
     DataContext="{Binding Main, Source={StaticResource Locator}}" Loaded="PhoneApplicationPage_Loaded">
+	<phone:PhoneApplicationPage.ApplicationBar>
+		<shell:ApplicationBar Mode="Minimized">
+			<shell:ApplicationBar.MenuItems>
+				<shell:ApplicationBarMenuItem x:Name="PrivacyPolicyMenu" Text="Политика конфиденциальности"/>
+				<shell:ApplicationBarMenuItem x:Name="LocationToggleMenu" Text="Вкл\выкл геолокацию"/>
+			</shell:ApplicationBar.MenuItems>
+		</shell:ApplicationBar>
+	</phone:PhoneApplicationPage.ApplicationBar>
 
     <!--LayoutRoot contains the root grid where all other page content is placed-->
     <Grid x:Name="LayoutRoot">
@@ -49,7 +57,7 @@
                                                       ImageSource="/Assets/e11a-Search.100.png" 
                                                       Name="SearchTile" Tap="SearchTile_Tap"/>
                         <telerikPrimitives:RadHubTile 
-                            Title="{Binding Path=LocalizedResources.MapTitle, 
+                            Title="{Binding Path=LocalizedResources.AddPlaceTitle, 
                             Source={StaticResource LocalizedStrings}}" 
                             ImageSource="/Assets/e109-Add.100.png" Name="AddTile" Tap="AddTile_Tap"/>
                         <telerikPrimitives:RadHubTile 

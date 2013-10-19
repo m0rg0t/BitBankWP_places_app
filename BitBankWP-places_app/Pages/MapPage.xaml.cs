@@ -7,6 +7,13 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using System.Device.Location;
+using Microsoft.Xna.Framework;
+using Microsoft.Phone.Maps.Controls;
+using BitBankWP_places_app.ViewModel;
+using System.Windows.Media;
+using BitBankWP_places_app.Controls;
+using BitBankWP_places_app.Model;
 
 namespace BitBankWP_places_app.Pages
 {
@@ -19,6 +26,48 @@ namespace BitBankWP_places_app.Pages
 
             // Sample code to localize the ApplicationBar
             //BuildLocalizedApplicationBar();
+        }
+
+        private void DrawMapMarkers()
+        {
+            PlaceMap.Layers.Clear();
+            MapLayer mapLayer = new MapLayer();
+
+            // Draw marker for current position
+            if (ViewModelLocator.MainStatic.PlaceItems.Count()>0)
+            {
+                foreach (var item in ViewModelLocator.MainStatic.PlaceItems)
+                {
+                    DrawMapMarker(item.Position, item, mapLayer);
+                };                
+            }
+
+            PlaceMap.Layers.Add(mapLayer);
+            PlaceMap.Center = ViewModelLocator.MainStatic.PlaceItems.FirstOrDefault().Position;
+        }
+
+        private void DrawMapMarker(GeoCoordinate coordinate, PlaceItem place, MapLayer mapLayer)
+        {
+            // Create a map marker
+            var item = new MapItemControl();
+
+            item.Image = place.Image;
+            item.Tag = new GeoCoordinate(coordinate.Latitude, coordinate.Longitude);
+
+            // Enable marker to be tapped for location information            
+            //polygon.MouseLeftButtonUp += new MouseButtonEventHandler(Marker_Click);
+
+            // Create a MapOverlay and add marker
+            MapOverlay overlay = new MapOverlay();
+            overlay.Content = item; //polygon;
+            overlay.GeoCoordinate = new GeoCoordinate(coordinate.Latitude, coordinate.Longitude);
+            overlay.PositionOrigin = new System.Windows.Point(0.5, 1.0);
+            mapLayer.Add(overlay);
+        }
+
+        private void PlaceMap_Loaded(object sender, RoutedEventArgs e)
+        {
+            DrawMapMarkers();
         }
 
         // Sample code for building a localized ApplicationBar

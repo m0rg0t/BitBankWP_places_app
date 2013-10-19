@@ -23,6 +23,12 @@
                             shell:SystemTray.Opacity="0"
                             
                             DataContext="{Binding Main.CurrentItem, Source={StaticResource Locator}}">
+	<phone:PhoneApplicationPage.ApplicationBar>
+		<shell:ApplicationBar>
+			<shell:ApplicationBarIconButton x:Name="AppBarCommentButton" IconUri="/Assets/AppBar/add.png" Text="Добавить"/>
+			<!--<shell:ApplicationBarIconButton x:Name="AppBarPhotoButton" IconUri="/Assets/AppBar/feature.camera.png" Text="Фото" IsEnabled="True"/>-->
+		</shell:ApplicationBar>
+	</phone:PhoneApplicationPage.ApplicationBar>
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot"
@@ -76,11 +82,34 @@
                 <Grid Margin="10,-30,0,0">
                     <ScrollViewer>
                     <StackPanel>
-                        <TextBlock Text="{Binding Title}"/>
-                        <TextBlock Text="{Binding Description}"/>
-                        <TextBlock Text="{Binding Address}"/>
-                        <TextBlock Text="{Binding ShopName}"/>
-                        <TextBlock Text="{Binding ShopWorkTime}"/>
+                        <TextBlock Text="{Binding Path=LocalizedResources.ItemTitle, 
+                            Source={StaticResource LocalizedStrings}}" 
+                                   Style="{StaticResource ItemCaptionStyle1}"/>
+                        <TextBlock Text="{Binding Title}" TextWrapping="Wrap"/>
+
+                        <TextBlock Style="{StaticResource ItemCaptionStyle1}"
+                                       Text="{Binding Path=LocalizedResources.ItemDescription, 
+                                Source={StaticResource LocalizedStrings}}"/>
+                            <TextBlock Text="{Binding Description}" TextWrapping="Wrap"/>
+
+                        <TextBlock Text="{Binding Path=LocalizedResources.ItemAddress, 
+                                Source={StaticResource LocalizedStrings}}" 
+                                   Style="{StaticResource ItemCaptionStyle1}"/>
+                            <TextBlock Text="{Binding Address}" TextWrapping="Wrap"/>
+
+                        <TextBlock Text="{Binding Path=LocalizedResources.ItemShopName, 
+                                Source={StaticResource LocalizedStrings}}" 
+                                   Style="{StaticResource ItemCaptionStyle1}"/>
+                            <TextBlock Text="{Binding ShopName}" TextWrapping="Wrap"/>
+
+                        <TextBlock Text="{Binding Path=LocalizedResources.ItemShopWorkTime, 
+                                Source={StaticResource LocalizedStrings}}" 
+                                   Style="{StaticResource ItemCaptionStyle1}"/>
+                            <TextBlock Text="{Binding ShopWorkTime}" TextWrapping="Wrap"/>
+
+                        <TextBlock Text="{Binding Path=LocalizedResources.ItemPhoto, 
+                                Source={StaticResource LocalizedStrings}}" 
+                                   Style="{StaticResource ItemCaptionStyle1}"/>
                         <Image Source="{Binding Image}"/>
                     </StackPanel>
                     </ScrollViewer>
@@ -108,7 +137,7 @@
                     <telerikData:RadJumpList 
                         Margin="0,0,0,0" Width="Auto"                
                         x:Name="CommentsList"                                          
-                        ItemsSource="{Binding Path=PlaceItems}"
+                        ItemsSource="{Binding Path=CommentItems}"
                         ItemTemplate="{StaticResource PlaceItem}"
                         DataContext="{Binding Main, Source={StaticResource Locator}}" 
                         VerticalAlignment="Stretch"

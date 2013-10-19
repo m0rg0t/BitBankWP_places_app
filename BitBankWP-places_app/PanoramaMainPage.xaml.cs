@@ -51,7 +51,10 @@ namespace BitBankWP_places_app
         {
             try
             {
-                ViewModelLocator.MainStatic.LoadData();
+                if (ViewModelLocator.MainStatic.PlaceItems.Count() < 1)
+                {
+                    ViewModelLocator.MainStatic.LoadData();
+                };                
             }
             catch { };
         }

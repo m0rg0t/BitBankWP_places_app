@@ -97,6 +97,60 @@ namespace BitBankWP_places_app.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Адрес:.
+        /// </summary>
+        public static string ItemAddress {
+            get {
+                return ResourceManager.GetString("ItemAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Описание:.
+        /// </summary>
+        public static string ItemDescription {
+            get {
+                return ResourceManager.GetString("ItemDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Фотография:.
+        /// </summary>
+        public static string ItemPhoto {
+            get {
+                return ResourceManager.GetString("ItemPhoto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Название магазина:.
+        /// </summary>
+        public static string ItemShopName {
+            get {
+                return ResourceManager.GetString("ItemShopName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Время работы:.
+        /// </summary>
+        public static string ItemShopWorkTime {
+            get {
+                return ResourceManager.GetString("ItemShopWorkTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Название:.
+        /// </summary>
+        public static string ItemTitle {
+            get {
+                return ResourceManager.GetString("ItemTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Вход.
         /// </summary>
         public static string LoginTitle {

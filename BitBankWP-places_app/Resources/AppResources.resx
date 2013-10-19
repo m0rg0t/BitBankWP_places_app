@@ -155,4 +155,22 @@
   <data name="SearchTitle" xml:space="preserve">
     <value>Поиск</value>
   </data>
+  <data name="ItemAddress" xml:space="preserve">
+    <value>Адрес:</value>
+  </data>
+  <data name="ItemDescription" xml:space="preserve">
+    <value>Описание:</value>
+  </data>
+  <data name="ItemPhoto" xml:space="preserve">
+    <value>Фотография:</value>
+  </data>
+  <data name="ItemShopName" xml:space="preserve">
+    <value>Название магазина:</value>
+  </data>
+  <data name="ItemShopWorkTime" xml:space="preserve">
+    <value>Время работы:</value>
+  </data>
+  <data name="ItemTitle" xml:space="preserve">
+    <value>Название:</value>
+  </data>
 </root>
