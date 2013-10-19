@@ -30,24 +30,31 @@
             <!--Panorama item one-->
             <phone:PanoramaItem>
                 <phone:PanoramaItem.Header>
-                    <TextBlock Text="Меню" FontSize="60"/>
+                    <TextBlock Text="{Binding Path=LocalizedResources.MenuTitle, 
+                            Source={StaticResource LocalizedStrings}}" FontSize="60"/>
                 </phone:PanoramaItem.Header>
                 <Grid Margin="10,-30,0,0">
                     <telerikPrimitives:RadWrapPanel x:Name="MenuPanel">
-                        <telerikPrimitives:RadHubTile Title="Карта" ImageSource="/Assets/e139-Map Pin.100.png" 
+                        <telerikPrimitives:RadHubTile Title="{Binding Path=LocalizedResources.MapTitle, 
+                            Source={StaticResource LocalizedStrings}}" 
+                                                      ImageSource="/Assets/e139-Map Pin.100.png" 
                                                       Name="MapTile" Tap="MapTile_Tap"/>
-                        <telerikPrimitives:RadMosaicHubTile Title="Ближайшие" 
+                        <telerikPrimitives:RadMosaicHubTile Title="{Binding Path=LocalizedResources.NearestTitle, 
+                            Source={StaticResource LocalizedStrings}}" 
                             ImageSources="{Binding Path=NearestImages}"
                             DataContext="{Binding Main, Source={StaticResource Locator}}" 
                             Name="NearestTile" Tap="NearestTile_Tap"/>
-                        <telerikPrimitives:RadHubTile Title="Поиск" 
+                        <telerikPrimitives:RadHubTile Title="{Binding Path=LocalizedResources.SearchTitle, 
+                            Source={StaticResource LocalizedStrings}}" 
                                                       ImageSource="/Assets/e11a-Search.100.png" 
                                                       Name="SearchTile" Tap="SearchTile_Tap"/>
                         <telerikPrimitives:RadHubTile 
-                            Title="Добавить место" 
+                            Title="{Binding Path=LocalizedResources.MapTitle, 
+                            Source={StaticResource LocalizedStrings}}" 
                             ImageSource="/Assets/e109-Add.100.png" Name="AddTile" Tap="AddTile_Tap"/>
                         <telerikPrimitives:RadHubTile 
-                            Title="Вход" 
+                            Title="{Binding Path=LocalizedResources.LoginTitle, 
+                            Source={StaticResource LocalizedStrings}}" 
                             ImageSource="/Assets/1f511-Key.100.png" Name="LoginTile" Tap="LoginTile_Tap" />
                     </telerikPrimitives:RadWrapPanel>
                 </Grid>
@@ -56,7 +63,7 @@
             <!--Panorama item two-->
             <phone:PanoramaItem>
                 <phone:PanoramaItem.Header>
-                    <TextBlock Text="Ближайшие" FontSize="60"/>
+                    <TextBlock Text="{Binding Path=LocalizedResources.NearestTitle, Source={StaticResource LocalizedStrings}}" FontSize="60"/>
                 </phone:PanoramaItem.Header>
                 <Grid Margin="10,-30,0,0">
                     <telerikData:RadJumpList 
@@ -67,7 +74,7 @@
                         DataContext="{Binding Main, Source={StaticResource Locator}}" 
                         VerticalAlignment="Stretch"
                         HorizontalContentAlignment="Left" HorizontalAlignment="Stretch" 
-                        EmptyContent="Нет данных." ItemTap="CategoriesList_ItemTap">
+                        EmptyContent="{Binding Path=LocalizedResources.NoData, Source={StaticResource LocalizedStrings}}" ItemTap="CategoriesList_ItemTap">
                     </telerikData:RadJumpList>
                 </Grid>
             </phone:PanoramaItem>

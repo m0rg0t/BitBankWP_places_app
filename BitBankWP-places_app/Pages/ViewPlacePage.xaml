@@ -113,7 +113,7 @@
                         DataContext="{Binding Main, Source={StaticResource Locator}}" 
                         VerticalAlignment="Stretch"
                         HorizontalContentAlignment="Left" HorizontalAlignment="Stretch" 
-                        EmptyContent="Нет данных.">
+                        EmptyContent="{Binding Path=LocalizedResources.NoData, Source={StaticResource LocalizedStrings}}">
                     </telerikData:RadJumpList>
                 </Grid>
             </phone:PanoramaItem>

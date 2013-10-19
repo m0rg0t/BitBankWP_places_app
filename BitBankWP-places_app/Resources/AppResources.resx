@@ -134,4 +134,25 @@
   <data name="AppBarMenuItemText" xml:space="preserve">
     <value>Menu Item</value>
   </data>
+  <data name="AddPlaceTitle" xml:space="preserve">
+    <value>Добавить место</value>
+  </data>
+  <data name="LoginTitle" xml:space="preserve">
+    <value>Вход</value>
+  </data>
+  <data name="MapTitle" xml:space="preserve">
+    <value>Карта</value>
+  </data>
+  <data name="MenuTitle" xml:space="preserve">
+    <value>Меню</value>
+  </data>
+  <data name="NearestTitle" xml:space="preserve">
+    <value>Ближайшие</value>
+  </data>
+  <data name="NoData" xml:space="preserve">
+    <value>Нет данных</value>
+  </data>
+  <data name="SearchTitle" xml:space="preserve">
+    <value>Поиск</value>
+  </data>
 </root>

@@ -61,6 +61,15 @@ namespace BitBankWP_places_app.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Добавить место.
+        /// </summary>
+        public static string AddPlaceTitle {
+            get {
+                return ResourceManager.GetString("AddPlaceTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to add.
         /// </summary>
         public static string AppBarButtonText {
@@ -88,6 +97,51 @@ namespace BitBankWP_places_app.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Вход.
+        /// </summary>
+        public static string LoginTitle {
+            get {
+                return ResourceManager.GetString("LoginTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Карта.
+        /// </summary>
+        public static string MapTitle {
+            get {
+                return ResourceManager.GetString("MapTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Меню.
+        /// </summary>
+        public static string MenuTitle {
+            get {
+                return ResourceManager.GetString("MenuTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ближайшие.
+        /// </summary>
+        public static string NearestTitle {
+            get {
+                return ResourceManager.GetString("NearestTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Нет данных.
+        /// </summary>
+        public static string NoData {
+            get {
+                return ResourceManager.GetString("NoData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to LeftToRight.
         /// </summary>
         public static string ResourceFlowDirection {
@@ -102,6 +156,15 @@ namespace BitBankWP_places_app.Resources {
         public static string ResourceLanguage {
             get {
                 return ResourceManager.GetString("ResourceLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Поиск.
+        /// </summary>
+        public static string SearchTitle {
+            get {
+                return ResourceManager.GetString("SearchTitle", resourceCulture);
             }
         }
     }

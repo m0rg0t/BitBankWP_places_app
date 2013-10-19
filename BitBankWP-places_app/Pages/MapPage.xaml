@@ -11,8 +11,16 @@
                             FontSize="{StaticResource PhoneFontSizeNormal}"
                             Foreground="{StaticResource PhoneForegroundBrush}"
                             SupportedOrientations="Portrait"
-                            Orientation="Portrait"
-                            shell:SystemTray.IsVisible="True"
+                           
+                            xmlns:maps="clr-namespace:Microsoft.Phone.Maps.Controls;assembly=Microsoft.Phone.Maps"
+                            
+                            xmlns:telerikData="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Data"
+                            xmlns:telerikPrimitives="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Primitives"
+                            xmlns:telerikCore="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Core"
+    
+                            shell:SystemTray.IsVisible="{Binding Loading}"
+                            shell:SystemTray.Opacity="0"
+                            
                             DataContext="{Binding Main, Source={StaticResource Locator}}">
 
     <!--LayoutRoot is the root grid where all page content is placed-->
@@ -46,10 +54,11 @@
         <StackPanel x:Name="TitlePanel"
                     Grid.Row="0"
                     Margin="12,17,0,28">
-            <TextBlock Text="MY APPLICATION"
+            <TextBlock Text="{Binding Path=LocalizedResources.ApplicationTitle, 
+                Source={StaticResource LocalizedStrings}}"
                        Style="{StaticResource PhoneTextNormalStyle}"
                        Margin="12,0" />
-            <TextBlock Text="page name"
+            <TextBlock Text="{Binding Path=LocalizedResources.MapTitle, Source={StaticResource LocalizedStrings}}"
                        Margin="9,-7,0,0"
                        Style="{StaticResource PhoneTextTitle1Style}" />
         </StackPanel>
@@ -58,15 +67,7 @@
         <Grid x:Name="ContentPanel"
               Grid.Row="1"
               Margin="12,0,12,0">
-
-            <TextBlock Text="{Binding WelcomeTitle}"
-                       Style="{StaticResource PhoneTextNormalStyle}"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       TextAlignment="Center"
-                       TextWrapping="Wrap"
-                       FontSize="40" />
-
+            <maps:Map Name="PlaceMap" ZoomLevel="10"/>
         </Grid>
 
         <!--Uncomment to see an alignment grid to help ensure your controls are

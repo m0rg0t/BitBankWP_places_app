@@ -40,6 +40,7 @@ namespace BitBankWP_places_app.ViewModel
                 //var query = from item in ParseObject.GetQuery("Place") select item;
                 IEnumerable<ParseObject> results = await query.FindAsync();
                 PlaceItems = new ObservableCollection<PlaceItem>();
+                NearestImages = new Collection<string>();
                 foreach (var item in results)
                 {
                     try
@@ -57,6 +58,7 @@ namespace BitBankWP_places_app.ViewModel
                         {
                             var file = item.Get<ParseFile>("photo");
                             placeItem.Image = file.Url.ToString();
+                            NearestImages.Add(file.Url.ToString());
                         }
                         catch { };
                         PlaceItems.Add(placeItem);
@@ -67,6 +69,20 @@ namespace BitBankWP_places_app.ViewModel
             catch { };
             return true;
         }
+
+        private Collection<string> _nearestImages = new Collection<string>();
+        /// <summary>
+        /// 
+        /// </summary>
+        public Collection<string> NearestImages
+        {
+            get { return _nearestImages; }
+            set { 
+                _nearestImages = value;
+                RaisePropertyChanged("NearestImages");
+            }
+        }
+        
 
         private ObservableCollection<PlaceItem> _placeItems = new ObservableCollection<PlaceItem>();
         /// <summary>
@@ -81,7 +97,7 @@ namespace BitBankWP_places_app.ViewModel
             }
         }
 
-        private PlaceItem _currentItem;
+        private PlaceItem _currentItem = new PlaceItem();
         /// <summary>
         /// Текущее место
         /// </summary>
