@@ -34,22 +34,37 @@ namespace BitBankWP_places_app.ViewModel
 
         public async Task<bool> LoadAllPlaces()
         {
-            var query = from place in ParseObject.GetQuery("Place")
-                        where true
-                        select place;
-            IEnumerable<ParseObject> results = await query.FindAsync();            
-            PlaceItems = new ObservableCollection<PlaceItem>();
-            foreach (var item in results) {
-                var placeItem = new PlaceItem();
-                placeItem.Title = item.Get<string>("title");
-                placeItem.Description = item.Get<string>("description");
-                placeItem.Lat = item.Get<double>("lat");
-                placeItem.Lon = item.Get<double>("lon");
-                placeItem.ShopName = item.Get<string>("shopName");
-                placeItem.ShopWorkTime = item.Get<string>("shopWorkTime");
-                placeItem.ObjectId = item.Get<string>("objectId");
-                PlaceItems.Add(placeItem);
-            };
+            try
+            {
+                var query = ParseObject.GetQuery("Place");
+                //var query = from item in ParseObject.GetQuery("Place") select item;
+                IEnumerable<ParseObject> results = await query.FindAsync();
+                PlaceItems = new ObservableCollection<PlaceItem>();
+                foreach (var item in results)
+                {
+                    try
+                    {
+                        var placeItem = new PlaceItem();
+                        placeItem.Title = item.Get<string>("title");
+                        placeItem.Address = item.Get<string>("address");
+                        placeItem.Description = item.Get<string>("description");
+                        placeItem.Lat = item.Get<double>("lat");
+                        placeItem.Lon = item.Get<double>("lon");
+                        placeItem.ShopName = item.Get<string>("shopName");
+                        placeItem.ShopWorkTime = item.Get<string>("shopWorkTime");
+                        placeItem.ObjectId = item.ObjectId.ToString();
+                        try
+                        {
+                            var file = item.Get<ParseFile>("photo");
+                            placeItem.Image = file.Url.ToString();
+                        }
+                        catch { };
+                        PlaceItems.Add(placeItem);
+                    }
+                    catch { };
+                };
+            }
+            catch { };
             return true;
         }
 
@@ -65,7 +80,20 @@ namespace BitBankWP_places_app.ViewModel
                 RaisePropertyChanged("PlaceItems");
             }
         }
-        
+
+        private PlaceItem _currentItem;
+        /// <summary>
+        /// Текущее место
+        /// </summary>
+        public PlaceItem CurrentItem
+        {
+            get { return _currentItem; }
+            set { 
+                _currentItem = value;
+                RaisePropertyChanged("CurrentItem");
+            }
+        }
+                
 
         public async Task<bool> LoadData()
         {

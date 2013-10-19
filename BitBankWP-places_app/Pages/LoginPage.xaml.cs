@@ -7,7 +7,6 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-using BitBankWP_places_app.Resources;
 using BitBankWP_places_app.ViewModel;
 
 namespace BitBankWP_places_app
@@ -21,7 +20,6 @@ namespace BitBankWP_places_app
 
             // Sample code to localize the ApplicationBar
             //BuildLocalizedApplicationBar();
-            MessageBox.Show(MainViewModel.WelcomeTitlePropertyName);
         }
 
         // Sample code for building a localized ApplicationBar

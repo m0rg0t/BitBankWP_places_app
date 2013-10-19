@@ -7,7 +7,8 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-using BitBankWP_places_app.Pages.Resources;
+using Microsoft.Phone.Maps.Controls;
+using BitBankWP_places_app.ViewModel;
 
 namespace BitBankWP_places_app.Pages
 {
@@ -20,6 +21,20 @@ namespace BitBankWP_places_app.Pages
 
             // Sample code to localize the ApplicationBar
             //BuildLocalizedApplicationBar();
+        }
+
+        private void PlaceMap_Loaded(object sender, RoutedEventArgs e)
+        {
+            Map item = new Map();
+            //item.Center
+            try
+            {
+                /*PlaceMap.Center.Latitude = ViewModelLocator.MainStatic.CurrentItem.Lon;
+                PlaceMap.Center.Longitude = ViewModelLocator.MainStatic.CurrentItem.Lat;
+                var i = PlaceMap.Center;
+                var b = i;*/
+            }
+            catch { };
         }
 
         // Sample code for building a localized ApplicationBar

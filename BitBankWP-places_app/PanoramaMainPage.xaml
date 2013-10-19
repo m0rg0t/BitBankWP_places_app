@@ -32,7 +32,7 @@
                 <phone:PanoramaItem.Header>
                     <TextBlock Text="Меню" FontSize="60"/>
                 </phone:PanoramaItem.Header>
-                <Grid>
+                <Grid Margin="10,-30,0,0">
                     <telerikPrimitives:RadWrapPanel x:Name="MenuPanel">
                         <telerikPrimitives:RadHubTile Title="Карта" ImageSource="/Assets/e139-Map Pin.100.png" 
                                                       Name="MapTile" Tap="MapTile_Tap"/>
@@ -44,6 +44,9 @@
                                                       ImageSource="/Assets/e11a-Search.100.png" 
                                                       Name="SearchTile" Tap="SearchTile_Tap"/>
                         <telerikPrimitives:RadHubTile 
+                            Title="Добавить место" 
+                            ImageSource="/Assets/e109-Add.100.png" Name="AddTile" Tap="AddTile_Tap"/>
+                        <telerikPrimitives:RadHubTile 
                             Title="Вход" 
                             ImageSource="/Assets/1f511-Key.100.png" Name="LoginTile" Tap="LoginTile_Tap" />
                     </telerikPrimitives:RadWrapPanel>
@@ -53,18 +56,18 @@
             <!--Panorama item two-->
             <phone:PanoramaItem>
                 <phone:PanoramaItem.Header>
-                    <TextBlock Text="Блюжайшие" FontSize="60"/>
+                    <TextBlock Text="Ближайшие" FontSize="60"/>
                 </phone:PanoramaItem.Header>
-                <Grid>
+                <Grid Margin="10,-30,0,0">
                     <telerikData:RadJumpList 
                         Margin="0,0,0,0" Width="Auto"                
-                        x:Name="CategoriesList"                                          
+                        x:Name="NearestPlacesList"                                          
                         ItemsSource="{Binding Path=PlaceItems}"
                         ItemTemplate="{StaticResource PlaceItem}"
                         DataContext="{Binding Main, Source={StaticResource Locator}}" 
                         VerticalAlignment="Stretch"
                         HorizontalContentAlignment="Left" HorizontalAlignment="Stretch" 
-                        EmptyContent="Нет данных.">
+                        EmptyContent="Нет данных." ItemTap="CategoriesList_ItemTap">
                     </telerikData:RadJumpList>
                 </Grid>
             </phone:PanoramaItem>

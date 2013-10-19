@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Phone.Maps.Controls;
+using System.Device.Location;
 
 namespace BitBankWP_places_app.Model
 {
@@ -111,7 +113,10 @@ namespace BitBankWP_places_app.Model
         public double Lat
         {
             get { return _lat; }
-            set { _lat = value; }
+            set { 
+                _lat = value;
+                RaisePropertyChanged("Lat");
+            }
         }
 
 
@@ -122,10 +127,64 @@ namespace BitBankWP_places_app.Model
         public double Lon
         {
             get { return _lon; }
-            set { _lon = value; }
+            set { 
+                _lon = value;
+                RaisePropertyChanged("Lon");
+            }
         }
-        
-        
+
+        private string _address;
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Address
+        {
+            get { return _address; }
+            set { 
+                _address = value;
+                RaisePropertyChanged("Address");
+            }
+        }
+
+        private string _image;
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Image
+        {
+            get { return _image; }
+            set { 
+                _image = value;
+                RaisePropertyChanged("Image");
+            }
+        }
+
+        private string _userId;
+        /// <summary>
+        /// Идентификатор пользователя, добавившего место
+        /// </summary>
+        public string UserId
+        {
+            get { return _userId; }
+            set
+            {
+                _userId = value;
+                RaisePropertyChanged("UserId");
+            }
+        }
+
+        private GeoCoordinate _position;
+        /// <summary>
+        /// 
+        /// </summary>
+        public GeoCoordinate Position
+        {
+            get {
+                _position = new GeoCoordinate(this.Lat, this.Lon);
+                return _position; 
+            }
+            private set {}
+        }
         
 
     }

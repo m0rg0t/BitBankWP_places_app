@@ -7,7 +7,6 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-using BitBankWP_places_app.Pages.Resources;
 
 namespace BitBankWP_places_app.Pages
 {

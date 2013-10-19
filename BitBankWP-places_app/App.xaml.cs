@@ -9,6 +9,7 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using BitBankWP_places_app.Resources;
 using BitBankWP_places_app.ViewModel;
+using Parse;
 
 namespace BitBankWP_places_app
 {
@@ -58,7 +59,7 @@ namespace BitBankWP_places_app
                 // and consume battery power when the user is not using the phone.
                 PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
             }
-
+            ParseClient.Initialize("mG6Iu7E97vN3IVJQ81qRduW48gDI3pKvpYg4gosb", "CNaMPAKsDJ2Uu7sBG31YO4Lf7TWUPNT85a4E8POC");
         }
 
         // Code to execute when the application is launching (eg, from Start)
