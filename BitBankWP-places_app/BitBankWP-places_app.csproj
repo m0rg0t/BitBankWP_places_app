@@ -104,6 +104,12 @@
     <Compile Include="Pages\AddPlacePage.xaml.cs">
       <DependentUpon>AddPlacePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\FacebookInfoPage.xaml.cs">
+      <DependentUpon>FacebookInfoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\FacebookLoginPage.xaml.cs">
+      <DependentUpon>FacebookLoginPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
@@ -126,6 +132,7 @@
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\UserViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -138,6 +145,12 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\AddPlacePage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\FacebookInfoPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\FacebookLoginPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\LoginPage.xaml">

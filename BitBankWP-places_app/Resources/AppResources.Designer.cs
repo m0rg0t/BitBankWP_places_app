@@ -205,6 +205,15 @@ namespace BitBankWP_places_app.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Профиль.
+        /// </summary>
+        public static string ProfileTitle {
+            get {
+                return ResourceManager.GetString("ProfileTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to LeftToRight.
         /// </summary>
         public static string ResourceFlowDirection {

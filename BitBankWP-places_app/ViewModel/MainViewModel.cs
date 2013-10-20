@@ -23,6 +23,20 @@ namespace BitBankWP_places_app.ViewModel
         {
         }
 
+        private UserViewModel _user = new UserViewModel();
+        /// <summary>
+        /// 
+        /// </summary>
+        public UserViewModel User
+        {
+            get { return _user; }
+            set { 
+                _user = value;
+                RaisePropertyChanged("User");
+            }
+        }
+        
+
         private bool _loading;
         /// <summary>
         /// загрузка
@@ -159,13 +173,13 @@ namespace BitBankWP_places_app.ViewModel
                 Extensions.SaveJpeg(item.ImageSource, ms,
                     item.ImageSource.PixelWidth, item.ImageSource.PixelHeight, 0, 100);
 
-                //byte[] data = item.ImageSource.
                 ParseFile file = new ParseFile("photo" + UnixTimeNow().ToString() + ".jpg", ms.ToArray());
                 await file.SaveAsync();
 
                 //byte[] data = System.Text.Encoding.UTF8.GetBytes("Working at Parse is great!");
                 //ParseFile file = new ParseFile("resume.txt", data);
                 //await file.SaveAsync();
+                item.Image = file.Url.ToString();
 
                 place["photo"] = file;
                 await place.SaveAsync();

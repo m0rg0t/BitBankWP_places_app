@@ -23,7 +23,7 @@ namespace BitBankWP_places_app
         {
             try
             {
-                this.NavigationService.Navigate(new Uri("/Pages/LoginPage.xaml", UriKind.Relative));
+                this.NavigationService.Navigate(new Uri("/Pages/FacebookLoginPage.xaml", UriKind.Relative));
             }
             catch { };
         }
@@ -63,7 +63,13 @@ namespace BitBankWP_places_app
         {
             try
             {
-                this.NavigationService.Navigate(new Uri("/Pages/AddPlacePage.xaml", UriKind.Relative));
+                if (ViewModelLocator.MainStatic.User.IsLogged) {
+                    this.NavigationService.Navigate(new Uri("/Pages/AddPlacePage.xaml", UriKind.Relative));
+                } else {
+                    MessageBox.Show("Для добавления отзыва вы должны авторизоваться.");
+                    this.NavigationService.Navigate(new Uri("/Pages/FacebookLoginPage.xaml", UriKind.Relative));
+                };
+                
             }
             catch { };
         }

@@ -21,7 +21,7 @@
           <SmallImageURI IsRelative="true" IsResource="false">Assets\Tiles\FlipCycleTileSmall.png</SmallImageURI>
           <Count>0</Count>
           <BackgroundImageURI IsRelative="true" IsResource="false">Assets\Tiles\FlipCycleTileMedium.png</BackgroundImageURI>
-          <Title>ProjectForTemplates.WP8</Title>
+          <Title>места BitBank</Title>
           <BackContent>
           </BackContent>
           <BackBackgroundImageURI>
@@ -46,5 +46,9 @@
       <ScreenResolution Name="ID_RESOLUTION_WXGA" />
       <ScreenResolution Name="ID_RESOLUTION_HD720P" />
     </ScreenResolutions>
+    <Requirements>
+      <Requirement Name="ID_REQ_FRONTCAMERA" />
+      <Requirement Name="ID_REQ_REARCAMERA" />
+    </Requirements>
   </App>
 </Deployment>

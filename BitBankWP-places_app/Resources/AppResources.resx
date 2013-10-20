@@ -176,4 +176,7 @@
   <data name="AddTitle" xml:space="preserve">
     <value>Добавить</value>
   </data>
+  <data name="ProfileTitle" xml:space="preserve">
+    <value>Профиль</value>
+  </data>
 </root>
