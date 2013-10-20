@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2012/deployment" AppPlatformVersion="8.0">
   <DefaultLanguage xmlns="" code="en-US" />
-  <App xmlns="" ProductID="{cbe842ae-c7ed-4712-bce3-3f50a4da136b}" Title="BitBankWP_places_app" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="BitBankWP_places_app author" Description="Sample description" Publisher="BitBankWP_places_app" PublisherID="{37e42707-84b8-41b8-afee-3c18bc1156b9}">
+  <App xmlns="" ProductID="{cbe842ae-c7ed-4712-bce3-3f50a4da136b}" Title="места BitBank" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="BitBankWP_places_app author" Description="места BitBank" Publisher="BitBankWP_places_app" PublisherID="{37e42707-84b8-41b8-afee-3c18bc1156b9}">
     <IconPath IsRelative="true" IsResource="false">Assets\ApplicationIcon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_NETWORKING" />
@@ -10,6 +10,7 @@
       <Capability Name="ID_CAP_SENSORS" />
       <Capability Name="ID_CAP_WEBBROWSERCOMPONENT" />
       <Capability Name="ID_CAP_MAP" />
+      <Capability Name="ID_CAP_LOCATION" />
     </Capabilities>
     <Tasks>
       <DefaultTask Name="_default" NavigationPage="PanoramaMainPage.xaml" />

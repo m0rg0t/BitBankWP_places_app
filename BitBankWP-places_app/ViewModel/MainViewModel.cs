@@ -4,6 +4,10 @@ using System.Threading.Tasks;
 using Parse;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Windows.Media.Imaging;
+using System.IO;
+using System;
+using System.Diagnostics;
 
 namespace BitBankWP_places_app.ViewModel
 {
@@ -32,6 +36,10 @@ namespace BitBankWP_places_app.ViewModel
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public async Task<bool> LoadAllPlaces()
         {
             try
@@ -109,12 +117,80 @@ namespace BitBankWP_places_app.ViewModel
                 RaisePropertyChanged("CurrentItem");
             }
         }
-                
 
+        private PlaceItem _newPlace = new PlaceItem();
+        /// <summary>
+        /// 
+        /// </summary>
+        public PlaceItem NewPlace
+        {
+            get { return _newPlace; }
+            set { 
+                _newPlace = value;
+                RaisePropertyChanged("NewPlace");
+            }
+        }
+
+        public long UnixTimeNow()
+        {
+            TimeSpan _TimeSpan = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0));
+            return (long)_TimeSpan.TotalSeconds;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        public async Task<bool> SaveItemToParse(PlaceItem item)
+        {
+            this.Loading = true;
+            try
+            {
+                ParseObject place = new ParseObject("Place");
+                place["title"] = item.Title;
+                place["description"] = item.Description;
+                place["address"] = item.Address;
+                place["shopName"] = item.ShopName;
+                place["shopWorkTime"] = item.ShopWorkTime;
+                place["userId"] = item.UserId;
+
+                MemoryStream ms = new MemoryStream();
+                Extensions.SaveJpeg(item.ImageSource, ms,
+                    item.ImageSource.PixelWidth, item.ImageSource.PixelHeight, 0, 100);
+
+                //byte[] data = item.ImageSource.
+                ParseFile file = new ParseFile("photo" + UnixTimeNow().ToString() + ".jpg", ms.ToArray());
+                await file.SaveAsync();
+
+                //byte[] data = System.Text.Encoding.UTF8.GetBytes("Working at Parse is great!");
+                //ParseFile file = new ParseFile("resume.txt", data);
+                //await file.SaveAsync();
+
+                place["photo"] = file;
+                await place.SaveAsync();
+
+                ViewModelLocator.MainStatic.PlaceItems.Add(item);
+            }
+            catch(Exception ex) {
+                Debug.WriteLine(ex.ToString());
+            };
+            this.Loading = false;
+            return true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public async Task<bool> LoadData()
         {
             this.Loading = true;
-            await LoadAllPlaces();
+            try
+            {
+                await LoadAllPlaces();
+            }
+            catch { };
             this.Loading = false;
             return true;
         }       

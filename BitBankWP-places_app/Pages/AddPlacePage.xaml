@@ -12,8 +12,19 @@
                             Foreground="{StaticResource PhoneForegroundBrush}"
                             SupportedOrientations="Portrait"
                             Orientation="Portrait"
+                            xmlns:Controls="clr-namespace:Coding4Fun.Toolkit.Controls;assembly=Coding4Fun.Toolkit.Controls"
+                            
+                            xmlns:telerikPrimitives="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Primitives"
+                            xmlns:telerikCore="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Core"
+                            
                             shell:SystemTray.IsVisible="True"
-                            DataContext="{Binding Main, Source={StaticResource Locator}}">
+                            DataContext="{Binding Main.NewPlace, Source={StaticResource Locator}}" Loaded="PhoneApplicationPage_Loaded">
+	<phone:PhoneApplicationPage.ApplicationBar>
+		<shell:ApplicationBar>
+			<shell:ApplicationBarIconButton x:Name="AddAppBarButton" IconUri="/Assets/AppBar/check.png" Text="Добавить" Click="AddAppBarButton_Click"/>
+			<shell:ApplicationBarIconButton x:Name="CancelAppBarButton" IconUri="/Assets/AppBar/cancel.png" Text="Отмена" Click="CancelAppBarButton_Click"/>
+		</shell:ApplicationBar>
+	</phone:PhoneApplicationPage.ApplicationBar>
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot"
@@ -22,6 +33,10 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+
+        <telerikPrimitives:RadBusyIndicator x:Name="BusyBar" Grid.RowSpan="2" IsRunning="False"
+                                            Foreground="{StaticResource PhoneAccentBrush}"
+                                            Canvas.ZIndex="1" Content="Добавление места..." />
 
         <!-- LOCALIZATION NOTE:
             To localize the displayed strings copy their values to appropriately named
@@ -46,27 +61,49 @@
         <StackPanel x:Name="TitlePanel"
                     Grid.Row="0"
                     Margin="12,17,0,28">
-            <TextBlock Text="MY APPLICATION"
+            <TextBlock Text="{Binding LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}"
                        Style="{StaticResource PhoneTextNormalStyle}"
                        Margin="12,0" />
-            <TextBlock Text="page name"
+            <TextBlock Text="{Binding LocalizedResources.AddTitle, Source={StaticResource LocalizedStrings}}"
                        Margin="9,-7,0,0"
                        Style="{StaticResource PhoneTextTitle1Style}" />
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
+
         <Grid x:Name="ContentPanel"
               Grid.Row="1"
               Margin="12,0,12,0">
+            <ScrollViewer Margin="0,0,0,68">
+                <StackPanel>                  
 
-            <TextBlock Text="{Binding WelcomeTitle}"
-                       Style="{StaticResource PhoneTextNormalStyle}"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       TextAlignment="Center"
-                       TextWrapping="Wrap"
-                       FontSize="40" />
+                    <TextBlock Text="{Binding LocalizedResources.ItemTitle, Source={StaticResource LocalizedStrings}}" 
+                                   Style="{StaticResource ItemCaptionStyle1}"/>
+                    <TextBox Text="{Binding Title, Mode=TwoWay}" x:Name="Title"/>
 
+                    <TextBlock Style="{StaticResource ItemCaptionStyle1}"
+                                       Text="{Binding LocalizedResources.ItemDescription, Source={StaticResource LocalizedStrings}}"/>
+                    <TextBox Text="{Binding Description, Mode=TwoWay}" x:Name="Description"/>
+
+                    <TextBlock Text="{Binding LocalizedResources.ItemAddress, Source={StaticResource LocalizedStrings}}" 
+                                   Style="{StaticResource ItemCaptionStyle1}"/>
+                    <TextBox Text="{Binding Address, Mode=TwoWay}" x:Name="Address"/>
+
+                    <TextBlock Text="{Binding LocalizedResources.ItemShopName, Source={StaticResource LocalizedStrings}}" 
+                                   Style="{StaticResource ItemCaptionStyle1}"/>
+                    <TextBox Text="{Binding ShopName, Mode=TwoWay}" x:Name="ShopName"/>
+
+                    <TextBlock Text="{Binding LocalizedResources.ItemShopWorkTime, Source={StaticResource LocalizedStrings}}" 
+                                   Style="{StaticResource ItemCaptionStyle1}"/>
+                    <TextBox Text="{Binding ShopWorkTime, Mode=TwoWay}" x:Name="ShopWorkTime"/>
+
+                    <TextBlock Text="{Binding LocalizedResources.ItemPhoto, Source={StaticResource LocalizedStrings}}" 
+                                   Style="{StaticResource ItemCaptionStyle1}"/>
+                    <Image x:Name="myImage" Stretch="UniformToFill" Tap="myImage_Tap" />
+                    <Button x:Name="MakePhoto" Content="Добавить фотографию" Click="MakePhoto_Click"/>
+                    
+                </StackPanel>
+            </ScrollViewer>
         </Grid>
 
         <!--Uncomment to see an alignment grid to help ensure your controls are

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Phone.Maps.Controls;
 using System.Device.Location;
+using System.Windows.Media.Imaging;
 
 namespace BitBankWP_places_app.Model
 {
@@ -27,6 +28,7 @@ namespace BitBankWP_places_app.Model
                 RaisePropertyChanged("ObjectId");
             }
         }
+        
 
         private string _description;
         /// <summary>
@@ -184,6 +186,19 @@ namespace BitBankWP_places_app.Model
                 return _position; 
             }
             private set {}
+        }
+
+        private WriteableBitmap _imageSource;
+        /// <summary>
+        /// 
+        /// </summary>
+        public WriteableBitmap ImageSource
+        {
+            get { return _imageSource; }
+            set { 
+                _imageSource = value;
+                RaisePropertyChanged("ImageSource");
+            }
         }
         
 

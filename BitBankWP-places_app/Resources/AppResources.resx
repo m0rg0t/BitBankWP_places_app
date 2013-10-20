@@ -173,4 +173,7 @@
   <data name="ItemTitle" xml:space="preserve">
     <value>Название:</value>
   </data>
+  <data name="AddTitle" xml:space="preserve">
+    <value>Добавить</value>
+  </data>
 </root>
