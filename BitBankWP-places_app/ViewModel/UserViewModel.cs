@@ -76,7 +76,7 @@ namespace BitBankWP_places_app.ViewModel
         }
         
 
-        private string _facebookToken;
+        private string _facebookToken = "";
         /// <summary>
         /// 
         /// </summary>
@@ -141,6 +141,20 @@ namespace BitBankWP_places_app.ViewModel
                 RaisePropertyChanged("UserImage");
             }
         }
+
+        private string _objectId;
+        /// <summary>
+        /// 
+        /// </summary>
+        public string ObjectId
+        {
+            get { return _objectId; }
+            set { 
+                _objectId = value;
+                RaisePropertyChanged("ObjectId");
+            }
+        }
+        
         
         
     }

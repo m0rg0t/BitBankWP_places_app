@@ -94,6 +94,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\BitBankMapControl.xaml.cs">
+      <DependentUpon>BitBankMapControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\MapItemControl.xaml.cs">
       <DependentUpon>MapItemControl.xaml</DependentUpon>
     </Compile>
@@ -140,6 +143,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Page Include="Controls\BitBankMapControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\MapItemControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -202,6 +209,8 @@
     <Content Include="Assets\e139-Map Pin.100.png" />
     <Content Include="Assets\grumpy-cat-8141_preview_zps9177ab07.png" />
     <Content Include="Assets\logo.png" />
+    <Content Include="Assets\map-arr.png" />
+    <Content Include="Assets\map-arr_black.png" />
     <Content Include="Assets\map_photo_pin.png" />
     <Content Include="Assets\Tiles\FlipCycleTileLarge.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

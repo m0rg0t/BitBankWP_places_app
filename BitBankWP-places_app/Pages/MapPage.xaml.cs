@@ -14,6 +14,7 @@ using BitBankWP_places_app.ViewModel;
 using System.Windows.Media;
 using BitBankWP_places_app.Controls;
 using BitBankWP_places_app.Model;
+using System.Windows.Input;
 
 namespace BitBankWP_places_app.Pages
 {
@@ -52,10 +53,10 @@ namespace BitBankWP_places_app.Pages
             var item = new MapItemControl();
 
             item.Image = place.Image;
-            item.Tag = new GeoCoordinate(coordinate.Latitude, coordinate.Longitude);
+            item.Tag = place.ObjectId; //new GeoCoordinate(coordinate.Latitude, coordinate.Longitude);
 
             // Enable marker to be tapped for location information            
-            //polygon.MouseLeftButtonUp += new MouseButtonEventHandler(Marker_Click);
+            item.MouseLeftButtonUp += new MouseButtonEventHandler(Marker_Click);
 
             // Create a MapOverlay and add marker
             MapOverlay overlay = new MapOverlay();
@@ -63,6 +64,15 @@ namespace BitBankWP_places_app.Pages
             overlay.GeoCoordinate = new GeoCoordinate(coordinate.Latitude, coordinate.Longitude);
             overlay.PositionOrigin = new System.Windows.Point(0.5, 1.0);
             mapLayer.Add(overlay);
+        }
+
+        private void Marker_Click(object sender, MouseButtonEventArgs e)
+        {
+            try {
+                ViewModelLocator.MainStatic.CurrentItem = (sender as PlaceItem);
+                this.NavigationService.Navigate(new Uri("/Pages/ViewPlacePage.xaml", UriKind.Relative));
+            }
+            catch { };
         }
 
         private void PlaceMap_Loaded(object sender, RoutedEventArgs e)

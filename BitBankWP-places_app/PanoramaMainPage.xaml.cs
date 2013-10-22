@@ -9,6 +9,9 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using BitBankWP_places_app.ViewModel;
 using BitBankWP_places_app.Model;
+using Parse;
+using System.Windows.Controls.Primitives;
+using Facebook;
 
 namespace BitBankWP_places_app
 {
@@ -19,13 +22,48 @@ namespace BitBankWP_places_app
             InitializeComponent();
         }
 
-        private void LoginTile_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        Popup browserPopup = new Popup();
+
+        private async void LoginTile_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
             try
             {
-                this.NavigationService.Navigate(new Uri("/Pages/FacebookLoginPage.xaml", UriKind.Relative));
+                var browser = new WebBrowser() { Name="browser", Width=480, Height=800};
+                browserPopup.Child = browser;
+                browserPopup.IsOpen = true;
+                //this.NavigationService.Navigate(new Uri("/Pages/FacebookLoginPage.xaml", UriKind.Relative));
+                ParseUser user = await ParseFacebookUtils.LogInAsync(browser, null);
+                var fb = new FacebookClient();
+                fb.AccessToken = ParseFacebookUtils.AccessToken;
+                var me = await fb.GetTaskAsync("me");
+
+                if (user.IsAuthenticated)
+                {
+                    IDictionary<string, object> results = (IDictionary<string, object>)me;
+                    ViewModelLocator.MainStatic.User.IsLogged = true;
+                    ViewModelLocator.MainStatic.User.FacebookId = (string)results["id"];
+                    ViewModelLocator.MainStatic.User.FacebookToken = ParseFacebookUtils.AccessToken;
+
+                    ViewModelLocator.MainStatic.User.Username = (string)results["name"];
+                    ViewModelLocator.MainStatic.User.FirstName = (string)results["first_name"];
+                    ViewModelLocator.MainStatic.User.LastName = (string)results["last_name"];
+
+                    ViewModelLocator.MainStatic.User.ObjectId = user.ObjectId.ToString();
+
+                    // available picture types: square (50x50), small (50xvariable height), large (about 200x variable height) (all size in pixels)
+                    // for more info visit http://developers.facebook.com/docs/reference/api
+                    string profilePictureUrl = string.Format("https://graph.facebook.com/{0}/picture?type={1}&access_token={2}",
+                        ViewModelLocator.MainStatic.User.FacebookId,
+                        "large",
+                        ViewModelLocator.MainStatic.User.FacebookToken);
+                    ViewModelLocator.MainStatic.User.UserImage = profilePictureUrl;
+                };
+
+                browserPopup.IsOpen = false;
             }
-            catch { };
+            catch {
+                browserPopup.IsOpen = false;
+            };
         }
 
         private void SearchTile_Tap(object sender, System.Windows.Input.GestureEventArgs e)

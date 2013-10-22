@@ -8,6 +8,10 @@ using System.Windows.Media.Imaging;
 using System.IO;
 using System;
 using System.Diagnostics;
+using Windows.Devices.Geolocation;
+using System.Windows;
+using System.Windows.Threading;
+using System.Device.Location;
 
 namespace BitBankWP_places_app.ViewModel
 {
@@ -54,13 +58,69 @@ namespace BitBankWP_places_app.ViewModel
         /// 
         /// </summary>
         /// <returns></returns>
-        public async Task<bool> LoadAllPlaces()
+        public async Task<bool> LoadNearPlaces()
+        {
+            try
+            {
+                //var query = ParseObject.GetQuery("Place");
+                //var query = from item in ParseObject.GetQuery("Place") select item;
+
+                // User's location
+                var userGeoPoint = new ParseGeoPoint(MyCoordinate.Latitude, MyCoordinate.Longitude);
+                // Create a query for places
+                var query = ParseObject.GetQuery("Place");
+                //Interested in locations near user.
+                query = query.WhereNear("latlon", userGeoPoint);
+                // Limit what could be a lot of points.
+                query = query.Limit(40);
+
+                IEnumerable<ParseObject> results = await query.FindAsync();
+
+                PlaceItems = new ObservableCollection<PlaceItem>();
+                NearestImages = new Collection<string>();
+                foreach (var item in results)
+                {
+                    try
+                    {
+                        var placeItem = new PlaceItem();
+                        placeItem.Title = item.Get<string>("title");
+                        placeItem.Address = item.Get<string>("address");
+                        placeItem.Description = item.Get<string>("description");
+                        placeItem.Lat = item.Get<double>("lat");
+                        placeItem.Lon = item.Get<double>("lon");
+                        placeItem.ShopName = item.Get<string>("shopName");
+                        placeItem.ShopWorkTime = item.Get<string>("shopWorkTime");
+                        placeItem.ObjectId = item.ObjectId.ToString();
+                        try
+                        {
+                            var file = item.Get<ParseFile>("photo");
+                            placeItem.Image = file.Url.ToString();
+                            NearestImages.Add(file.Url.ToString());
+                        }
+                        catch { };
+                        PlaceItems.Add(placeItem);
+                    }
+                    catch { };
+                };
+
+                if (PlaceItems.Count < 1)
+                {
+                    await LoadSomePlaces();
+                };
+            }
+            catch { };
+            return true;
+        }
+
+        public async Task<bool> LoadSomePlaces()
         {
             try
             {
                 var query = ParseObject.GetQuery("Place");
                 //var query = from item in ParseObject.GetQuery("Place") select item;
+                query = query.Limit(40);
                 IEnumerable<ParseObject> results = await query.FindAsync();
+
                 PlaceItems = new ObservableCollection<PlaceItem>();
                 NearestImages = new Collection<string>();
                 foreach (var item in results)
@@ -154,6 +214,43 @@ namespace BitBankWP_places_app.ViewModel
         /// <summary>
         /// 
         /// </summary>
+        public GeoCoordinate MyCoordinate
+        {
+            get;
+            set;
+        }
+
+        private double _accuracy = 0.0;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private async Task<bool> GetCurrentCoordinate()
+        {
+            Geolocator geolocator = new Geolocator();
+            geolocator.DesiredAccuracy = PositionAccuracy.High;
+
+            try
+            {
+                Geoposition currentPosition = await geolocator.GetGeopositionAsync(TimeSpan.FromMinutes(1),
+                                                                                   TimeSpan.FromSeconds(10));
+                _accuracy = currentPosition.Coordinate.Accuracy;
+                //Dispatcher.BeginInvoke(() =>
+                //{
+                    MyCoordinate = new GeoCoordinate(currentPosition.Coordinate.Latitude, currentPosition.Coordinate.Longitude);
+                //});
+            }
+            catch (Exception ex)
+            {
+                // Couldn't get current location - location might be disabled in settings
+                //MessageBox.Show("Current location cannot be obtained. Check that location service is turned on in phone settings.");
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
         public async Task<bool> SaveItemToParse(PlaceItem item)
@@ -168,6 +265,12 @@ namespace BitBankWP_places_app.ViewModel
                 place["shopName"] = item.ShopName;
                 place["shopWorkTime"] = item.ShopWorkTime;
                 place["userId"] = item.UserId;
+                place["lat"] = item.Lat;
+                place["lon"] = item.Lon;
+                place["latlon"] = new ParseGeoPoint(item.Lat, item.Lon);
+
+                place["authorImage"] = ViewModelLocator.MainStatic.User.UserImage;
+                place["authorUsername"] = ViewModelLocator.MainStatic.User.Username;
 
                 MemoryStream ms = new MemoryStream();
                 Extensions.SaveJpeg(item.ImageSource, ms,
@@ -200,9 +303,10 @@ namespace BitBankWP_places_app.ViewModel
         public async Task<bool> LoadData()
         {
             this.Loading = true;
+            await GetCurrentCoordinate();
             try
             {
-                await LoadAllPlaces();
+                await LoadNearPlaces();
             }
             catch { };
             this.Loading = false;

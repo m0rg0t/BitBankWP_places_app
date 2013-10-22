@@ -7,13 +7,13 @@
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
-    d:DesignHeight="100" d:DesignWidth="100">
+    d:DesignHeight="85" d:DesignWidth="42">
     
     <Grid x:Name="LayoutRoot">
         <!--Background="{StaticResource PhoneChromeBrush}"-->
-        <Image Width="100" Height="100" Source="/Assets/map_photo_pin.png" Stretch="None"/>
-        <Image Width="82" Height="63" VerticalAlignment="Top" 
+        <Image Width="42" Height="85" Source="/Assets/map-arr_black.png" Stretch="None"/>
+        <!--<Image Width="82" Height="63" VerticalAlignment="Top" 
                Margin="0,3,0,0"
-               x:Name="MainPhoto" Source="{Binding Image}" Stretch="UniformToFill"/>
+               x:Name="MainPhoto" Source="{Binding Image}" Stretch="UniformToFill"/>-->
     </Grid>
 </UserControl>

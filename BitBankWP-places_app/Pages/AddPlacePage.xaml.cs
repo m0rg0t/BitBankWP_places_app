@@ -12,6 +12,8 @@ using BitBankWP_places_app.Model;
 using Microsoft.Phone.Tasks;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
+using Windows.Devices.Geolocation;
+using System.Device.Location;
 
 namespace BitBankWP_places_app.Pages
 {
@@ -20,8 +22,7 @@ namespace BitBankWP_places_app.Pages
         // Constructor
         public AddPlacePage()
         {
-            InitializeComponent();
-            
+            InitializeComponent();            
             // Sample code to localize the ApplicationBar
             //BuildLocalizedApplicationBar();
         }
@@ -38,12 +39,48 @@ namespace BitBankWP_places_app.Pages
             catch { };
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public GeoCoordinate MyCoordinate { 
+            get; set; 
+        }
+
+        private double _accuracy = 0.0;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private async void GetCurrentCoordinate()
+        {
+            Geolocator geolocator = new Geolocator();
+            geolocator.DesiredAccuracy = PositionAccuracy.High;
+
+            try
+            {
+                Geoposition currentPosition = await geolocator.GetGeopositionAsync(TimeSpan.FromMinutes(1),
+                                                                                   TimeSpan.FromSeconds(10));
+                _accuracy = currentPosition.Coordinate.Accuracy;
+                Dispatcher.BeginInvoke(() =>
+                {
+                    MyCoordinate = new GeoCoordinate(currentPosition.Coordinate.Latitude, currentPosition.Coordinate.Longitude);
+                });
+            }
+            catch (Exception ex)
+            {
+                // Couldn't get current location - location might be disabled in settings
+                MessageBox.Show("Current location cannot be obtained. Check that location service is turned on in phone settings.");
+            }
+        }
+
         private async void AddAppBarButton_Click(object sender, EventArgs e)
         {
             this.BusyBar.IsRunning = true;
             try
             {
                 ViewModelLocator.MainStatic.NewPlace.ImageSource = bmp;
+                ViewModelLocator.MainStatic.NewPlace.Lat = MyCoordinate.Latitude;
+                ViewModelLocator.MainStatic.NewPlace.Lon = MyCoordinate.Longitude;
                 await ViewModelLocator.MainStatic.SaveItemToParse(ViewModelLocator.MainStatic.NewPlace);
                 this.BusyBar.IsRunning = false;
                 this.NavigationService.GoBack();
@@ -64,6 +101,8 @@ namespace BitBankWP_places_app.Pages
             {
                 cameraCaptureTask = new CameraCaptureTask();
                 cameraCaptureTask.Completed += new EventHandler<PhotoResult>(cameraCaptureTask_Completed);
+
+                GetCurrentCoordinate();
             }
             catch { };
         }

@@ -45,34 +45,47 @@
                 </phone:PanoramaItem.Header>
                 <Grid Margin="10,-30,0,0">
                     <telerikPrimitives:RadWrapPanel x:Name="MenuPanel">
-                        <telerikPrimitives:RadHubTile Title="{Binding Path=LocalizedResources.MapTitle, 
+                        <!-- 
+                            Background="{StaticResource PhoneAccentBitBankBrush}"
+                        -->
+                        <telerikPrimitives:RadHubTile 
+                            Title="{Binding Path=LocalizedResources.MapTitle, 
                             Source={StaticResource LocalizedStrings}}" 
-                                                      ImageSource="/Assets/e139-Map Pin.100.png" 
-                                                      Name="MapTile" Tap="MapTile_Tap"/>
+                            ImageSource="/Assets/e139-Map Pin.100.png" 
+                            Name="MapTile" Tap="MapTile_Tap"/>
                         <telerikPrimitives:RadMosaicHubTile Title="{Binding Path=LocalizedResources.NearestTitle, 
                             Source={StaticResource LocalizedStrings}}" 
                             ImageSources="{Binding Path=NearestImages}"
+                            
                             DataContext="{Binding Main, Source={StaticResource Locator}}" 
                             Name="NearestTile" Tap="NearestTile_Tap"/>
-                        <telerikPrimitives:RadHubTile Title="{Binding Path=LocalizedResources.SearchTitle, 
+                        <telerikPrimitives:RadHubTile 
+                            Title="{Binding Path=LocalizedResources.SearchTitle, 
                             Source={StaticResource LocalizedStrings}}" 
-                                                      ImageSource="/Assets/e11a-Search.100.png" 
-                                                      Name="SearchTile" Tap="SearchTile_Tap"/>
+                            ImageSource="/Assets/e11a-Search.100.png" 
+                            
+                            Name="SearchTile" Tap="SearchTile_Tap"/>
                         <telerikPrimitives:RadHubTile 
                             Title="{Binding Path=LocalizedResources.AddPlaceTitle, 
                             Source={StaticResource LocalizedStrings}}" 
-                            ImageSource="/Assets/e109-Add.100.png" Name="AddTile" Tap="AddTile_Tap"/>
+                            
+                            ImageSource="/Assets/e109-Add.100.png" Name="AddTile" 
+                            Tap="AddTile_Tap"/>
                         <telerikPrimitives:RadHubTile 
                             Visibility="{Binding User.UnLoggedVisibility}"
                             DataContext="{Binding Main, Source={StaticResource Locator}}"
                             Title="{Binding Path=LocalizedResources.LoginTitle, 
                             Source={StaticResource LocalizedStrings}}" 
-                            ImageSource="/Assets/1f511-Key.100.png" Name="LoginTile" Tap="LoginTile_Tap" />
+                            
+                            ImageSource="/Assets/1f511-Key.100.png" 
+                            Name="LoginTile" 
+                            Tap="LoginTile_Tap" />
                         <telerikPrimitives:RadSlideHubTile 
                             Visibility="{Binding User.LoggedInVisibility}"
                             DataContext="{Binding Main, Source={StaticResource Locator}}"
                             Title="{Binding Path=LocalizedResources.ProfileTitle, 
-                            Source={StaticResource LocalizedStrings}}">
+                            Source={StaticResource LocalizedStrings}}"
+                            >
                             <telerikPrimitives:RadSlideHubTile.Picture>
                                 <Image Source="{Binding User.UserImage}"
                                     DataContext="{Binding Main, Source={StaticResource Locator}}"

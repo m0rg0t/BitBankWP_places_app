@@ -36,7 +36,15 @@
         	<Setter Property="Foreground" Value="{StaticResource PhoneSubtleBrush}"/>
         	<Setter Property="Margin" Value="0,0,12,0"/>
         </Style>
-        
+
+        <Color x:Key="PhoneAccentBitBankColor">#BB202A</Color>
+
+        <SolidColorBrush x:Key="PhoneAccentBitBankBrush" Color="{StaticResource PhoneAccentBitBankColor}"/>
+        <Style x:Key="PhoneTextAccentBitBankStyle" TargetType="TextBlock" BasedOn="{StaticResource PhoneTextBlockBase}">
+            <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiBold}"/>
+            <Setter Property="Foreground" Value="{StaticResource PhoneAccentBitBankBrush}"/>
+        </Style>
+
     </Application.Resources>
 
     <Application.ApplicationLifetimeObjects>

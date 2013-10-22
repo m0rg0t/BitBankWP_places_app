@@ -36,6 +36,9 @@ namespace BitBankWP_places_app
             InitializePhoneApplication();
 
             ThemeManager.ToLightTheme();
+            //AccentColor color = new AccentColor();
+            //ThemeManager.SetAccentColor(color);
+            
 
             // Language display initialization
             InitializeLanguage();
@@ -60,6 +63,7 @@ namespace BitBankWP_places_app
                 PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
             }
             ParseClient.Initialize("mG6Iu7E97vN3IVJQ81qRduW48gDI3pKvpYg4gosb", "CNaMPAKsDJ2Uu7sBG31YO4Lf7TWUPNT85a4E8POC");
+            ParseFacebookUtils.Initialize("191969347658165");
         }
 
         // Code to execute when the application is launching (eg, from Start)
