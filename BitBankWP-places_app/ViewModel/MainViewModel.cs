@@ -62,9 +62,6 @@ namespace BitBankWP_places_app.ViewModel
         {
             try
             {
-                //var query = ParseObject.GetQuery("Place");
-                //var query = from item in ParseObject.GetQuery("Place") select item;
-
                 // User's location
                 var userGeoPoint = new ParseGeoPoint(MyCoordinate.Latitude, MyCoordinate.Longitude);
                 // Create a query for places
@@ -72,7 +69,7 @@ namespace BitBankWP_places_app.ViewModel
                 //Interested in locations near user.
                 query = query.WhereNear("latlon", userGeoPoint);
                 // Limit what could be a lot of points.
-                query = query.Limit(40);
+                query = query.Limit(80);
 
                 IEnumerable<ParseObject> results = await query.FindAsync();
 
@@ -80,27 +77,7 @@ namespace BitBankWP_places_app.ViewModel
                 NearestImages = new Collection<string>();
                 foreach (var item in results)
                 {
-                    try
-                    {
-                        var placeItem = new PlaceItem();
-                        placeItem.Title = item.Get<string>("title");
-                        placeItem.Address = item.Get<string>("address");
-                        placeItem.Description = item.Get<string>("description");
-                        placeItem.Lat = item.Get<double>("lat");
-                        placeItem.Lon = item.Get<double>("lon");
-                        placeItem.ShopName = item.Get<string>("shopName");
-                        placeItem.ShopWorkTime = item.Get<string>("shopWorkTime");
-                        placeItem.ObjectId = item.ObjectId.ToString();
-                        try
-                        {
-                            var file = item.Get<ParseFile>("photo");
-                            placeItem.Image = file.Url.ToString();
-                            NearestImages.Add(file.Url.ToString());
-                        }
-                        catch { };
-                        PlaceItems.Add(placeItem);
-                    }
-                    catch { };
+                    AddPlaceFromParseObject(item);
                 };
 
                 if (PlaceItems.Count < 1)
@@ -112,40 +89,60 @@ namespace BitBankWP_places_app.ViewModel
             return true;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="item"></param>
+        private void AddPlaceFromParseObject(ParseObject item, string type = "nearest")
+        {
+            try
+            {
+                var placeItem = new PlaceItem();
+                placeItem.Title = item.Get<string>("title");
+                placeItem.Address = item.Get<string>("address");
+                placeItem.Description = item.Get<string>("description");
+                placeItem.Lat = item.Get<double>("lat");
+                placeItem.Lon = item.Get<double>("lon");
+                placeItem.ShopName = item.Get<string>("shopName");
+                placeItem.ShopWorkTime = item.Get<string>("shopWorkTime");
+                placeItem.ObjectId = item.ObjectId.ToString();
+                try
+                {                    
+                    var file = item.Get<ParseFile>("photo");
+                    placeItem.Image = file.Url.ToString();
+                    if (type == "nearest")
+                    {
+                        NearestImages.Add(file.Url.ToString());
+                    };
+                }
+                catch { };
+                if (type == "search")
+                {
+                    SearchPlaceItems.Add(placeItem);
+                }
+                else
+                {
+                    PlaceItems.Add(placeItem);
+                    NearestPlaceItems.Add(placeItem);
+                };                
+            }
+            catch { };
+        }
+
         public async Task<bool> LoadSomePlaces()
         {
             try
             {
                 var query = ParseObject.GetQuery("Place");
                 //var query = from item in ParseObject.GetQuery("Place") select item;
-                query = query.Limit(40);
+                query = query.Limit(80);
                 IEnumerable<ParseObject> results = await query.FindAsync();
 
                 PlaceItems = new ObservableCollection<PlaceItem>();
                 NearestImages = new Collection<string>();
                 foreach (var item in results)
                 {
-                    try
-                    {
-                        var placeItem = new PlaceItem();
-                        placeItem.Title = item.Get<string>("title");
-                        placeItem.Address = item.Get<string>("address");
-                        placeItem.Description = item.Get<string>("description");
-                        placeItem.Lat = item.Get<double>("lat");
-                        placeItem.Lon = item.Get<double>("lon");
-                        placeItem.ShopName = item.Get<string>("shopName");
-                        placeItem.ShopWorkTime = item.Get<string>("shopWorkTime");
-                        placeItem.ObjectId = item.ObjectId.ToString();
-                        try
-                        {
-                            var file = item.Get<ParseFile>("photo");
-                            placeItem.Image = file.Url.ToString();
-                            NearestImages.Add(file.Url.ToString());
-                        }
-                        catch { };
-                        PlaceItems.Add(placeItem);
-                    }
-                    catch { };
+                    AddPlaceFromParseObject(item);
                 };
             }
             catch { };
@@ -163,8 +160,7 @@ namespace BitBankWP_places_app.ViewModel
                 _nearestImages = value;
                 RaisePropertyChanged("NearestImages");
             }
-        }
-        
+        }        
 
         private ObservableCollection<PlaceItem> _placeItems = new ObservableCollection<PlaceItem>();
         /// <summary>
@@ -178,6 +174,85 @@ namespace BitBankWP_places_app.ViewModel
                 RaisePropertyChanged("PlaceItems");
             }
         }
+
+        private ObservableCollection<PlaceItem> _nearestPlaceItems = new ObservableCollection<PlaceItem>();
+        /// <summary>
+        /// Nearest places
+        /// </summary>
+        public ObservableCollection<PlaceItem> NearestPlaceItems
+        {
+            get { return _nearestPlaceItems; }
+            set { 
+                _nearestPlaceItems = value;
+                RaisePropertyChanged("PlaceItems");
+            }
+        }
+
+
+        private string _searchQuery = "";
+        /// <summary>
+        /// 
+        /// </summary>
+        public string SearchQuery
+        {
+            get { return _searchQuery; }
+            set { 
+                _searchQuery = value;
+                RaisePropertyChanged("SearchQuery");
+            }
+        }
+        
+
+        /// <summary>
+        /// Search places
+        /// </summary>
+        /// <returns></returns>
+        public async Task<bool> LoadSearchPlaces()
+        {
+            this.Loading = true;
+            try
+            {
+                // User's location
+                var userGeoPoint = new ParseGeoPoint(MyCoordinate.Latitude, MyCoordinate.Longitude);
+                // Create a query for places
+                var query = from place in ParseObject.GetQuery("Place")
+                            where (place.Get<string>("title").Contains(SearchQuery) || place.Get<string>("title").Contains(SearchQuery.ToLower())) ||
+                                  (place.Get<string>("description").Contains(SearchQuery)|| place.Get<string>("title").Contains(SearchQuery.ToLower())) ||
+                                  (place.Get<string>("address").Contains(SearchQuery)|| place.Get<string>("title").Contains(SearchQuery.ToLower())) ||
+                                  (place.Get<string>("shopName").Contains(SearchQuery)|| place.Get<string>("title").Contains(SearchQuery.ToLower()))
+                            select place;
+                query = query.Limit(80);
+
+                IEnumerable<ParseObject> results = await query.FindAsync();
+
+                SearchPlaceItems = new ObservableCollection<PlaceItem>();
+                //NearestImages = new Collection<string>();
+                foreach (var item in results)
+                {
+                    AddPlaceFromParseObject(item, "search");
+                };
+            }
+            catch(Exception ex) {
+                Debug.WriteLine(ex.ToString());
+            };
+            this.Loading = false;
+
+            return true;
+        }
+
+        private ObservableCollection<PlaceItem> _searchPlaceItems;
+        /// <summary>
+        /// 
+        /// </summary>
+        public ObservableCollection<PlaceItem> SearchPlaceItems
+        {
+            get { return _searchPlaceItems; }
+            set { 
+                _searchPlaceItems = value;
+                RaisePropertyChanged("SearchPlaceItems");
+            }
+        }
+        
 
         private PlaceItem _currentItem = new PlaceItem();
         /// <summary>

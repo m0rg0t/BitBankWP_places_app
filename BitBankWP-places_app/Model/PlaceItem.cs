@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Phone.Maps.Controls;
 using System.Device.Location;
 using System.Windows.Media.Imaging;
+using Parse;
 
 namespace BitBankWP_places_app.Model
 {
@@ -118,6 +119,7 @@ namespace BitBankWP_places_app.Model
             set { 
                 _lat = value;
                 RaisePropertyChanged("Lat");
+                RaisePropertyChanged("GeoPoint");
             }
         }
 
@@ -132,6 +134,7 @@ namespace BitBankWP_places_app.Model
             set { 
                 _lon = value;
                 RaisePropertyChanged("Lon");
+                RaisePropertyChanged("GeoPoint");
             }
         }
 
@@ -200,6 +203,23 @@ namespace BitBankWP_places_app.Model
                 RaisePropertyChanged("ImageSource");
             }
         }
+
+        private ParseGeoPoint _geoPoint = new ParseGeoPoint();
+        /// <summary>
+        /// 
+        /// </summary>
+        public ParseGeoPoint GeoPoint
+        {
+            get {
+                ParseGeoPoint _geoPoint = new ParseGeoPoint(this.Lat, this.Lon);
+                return _geoPoint;
+            }
+            set { 
+                _geoPoint = value;
+                RaisePropertyChanged("GeoPoint");
+            }
+        }
+        
         
 
     }

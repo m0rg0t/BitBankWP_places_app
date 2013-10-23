@@ -24,7 +24,7 @@
 	<phone:PhoneApplicationPage.ApplicationBar>
 		<shell:ApplicationBar Mode="Minimized">
 			<shell:ApplicationBar.MenuItems>
-				<shell:ApplicationBarMenuItem x:Name="PrivacyPolicyMenu" Text="Политика конфиденциальности"/>
+				<shell:ApplicationBarMenuItem x:Name="PrivacyPolicyMenu" Text="Политика конфиденциальности" Click="PrivacyPolicyMenu_Click"/>
 				<shell:ApplicationBarMenuItem x:Name="LocationToggleMenu" Text="Вкл\выкл геолокацию"/>
 			</shell:ApplicationBar.MenuItems>
 		</shell:ApplicationBar>
@@ -32,7 +32,7 @@
 
     <!--LayoutRoot contains the root grid where all other page content is placed-->
     <Grid x:Name="LayoutRoot">
-        <phone:Panorama>
+        <phone:Panorama Name="MainPanorama">
             <phone:Panorama.Title>
                 <Image Margin="0,50,0,0" Source="/Assets/logo.png"/>
             </phone:Panorama.Title>
@@ -125,7 +125,7 @@
                     <telerikData:RadJumpList 
                         Margin="0,0,0,0" Width="Auto"                
                         x:Name="SearchPlacesList"                                          
-                        ItemsSource="{Binding Path=SearchItems}"
+                        ItemsSource="{Binding Path=SearchPlaceItems}"
                         ItemTemplate="{StaticResource PlaceItem}"
                         DataContext="{Binding Main, Source={StaticResource Locator}}" 
                         VerticalAlignment="Stretch"

@@ -12,6 +12,7 @@ using BitBankWP_places_app.Model;
 using Parse;
 using System.Windows.Controls.Primitives;
 using Facebook;
+using Coding4Fun.Toolkit.Controls;
 
 namespace BitBankWP_places_app
 {
@@ -66,9 +67,34 @@ namespace BitBankWP_places_app
             };
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SearchTile_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
+            try
+            {
+                //NavigationService.Navigate(new Uri("/SearchPage.xaml", UriKind.Relative));
+                InputPrompt input = new InputPrompt();
+                input.Completed += input_Completed;
+                input.Title = "Поиск";
+                input.Message = "ВВедите текст для поиска:";
+                input.Show();
+            }
+            catch { };
+        }
 
+        private void input_Completed(object sender, PopUpEventArgs<string, PopUpResult> e)
+        {
+            try
+            {
+                ViewModelLocator.MainStatic.SearchQuery = e.Result.ToString();
+                MainPanorama.DefaultItem = MainPanorama.Items[2];
+                ViewModelLocator.MainStatic.LoadSearchPlaces();
+            }
+            catch { };
         }
 
         private void MapTile_Tap(object sender, System.Windows.Input.GestureEventArgs e)
@@ -82,7 +108,7 @@ namespace BitBankWP_places_app
 
         private void NearestTile_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
-
+            MainPanorama.DefaultItem = MainPanorama.Items[1];
         }
 
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
@@ -118,6 +144,27 @@ namespace BitBankWP_places_app
             {
                 ViewModelLocator.MainStatic.CurrentItem = (this.NearestPlacesList.SelectedItem as PlaceItem);
                 this.NavigationService.Navigate(new Uri("/Pages/ViewPlacePage.xaml", UriKind.Relative));
+            }
+            catch { };
+        }
+
+        private void PrivacyPolicyMenu_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var messagePrompt = new MessagePrompt
+                {
+                    Title = "Политика конфиденциальности",
+                    Body = new TextBlock
+                    {
+                        Text = "Приложение не собирает никаких данных без вашего ведома.\nПриложение не собирает и не хранит информацию, которая связана с определенным именем. Мы также делаем все возможное, чтобы обезопасить хранимые данные.\nПринимая условия, которые включают эту политику вы соглашаетесь с данной политикой конфиденциальности.\nКонтакты m0rg0t.Anton@gmail.com",
+                        MaxHeight = 500,
+                        TextWrapping = TextWrapping.Wrap
+                    },
+                    IsAppBarVisible = false,
+                    IsCancelVisible = false
+                };
+                messagePrompt.Show();
             }
             catch { };
         }

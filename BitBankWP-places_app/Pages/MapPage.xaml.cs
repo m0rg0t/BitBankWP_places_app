@@ -69,7 +69,7 @@ namespace BitBankWP_places_app.Pages
         private void Marker_Click(object sender, MouseButtonEventArgs e)
         {
             try {
-                ViewModelLocator.MainStatic.CurrentItem = (sender as PlaceItem);
+                ViewModelLocator.MainStatic.CurrentItem = ViewModelLocator.MainStatic.PlaceItems.FirstOrDefault(c=>c.ObjectId==(sender as MapItemControl).Tag.ToString());
                 this.NavigationService.Navigate(new Uri("/Pages/ViewPlacePage.xaml", UriKind.Relative));
             }
             catch { };
