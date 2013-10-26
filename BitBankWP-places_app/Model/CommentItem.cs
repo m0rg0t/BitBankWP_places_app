@@ -51,6 +51,67 @@ namespace BitBankWP_places_app.Model
                 RaisePropertyChanged("UserId");
             }
         }
+
+        private string _placeId;
+        /// <summary>
+        /// 
+        /// </summary>
+        public string PlaceId
+        {
+            get { return _placeId; }
+            set { 
+                _placeId = value;
+                RaisePropertyChanged("PlaceId");
+            }
+        }
+
+        private string _userImage;
+        /// <summary>
+        /// 
+        /// </summary>
+        public string UserImage
+        {
+            get { return _userImage; }
+            set { 
+                _userImage = value;
+                RaisePropertyChanged("UserImage");
+            }
+        }
+
+        private string _userName;
+        /// <summary>
+        /// 
+        /// </summary>
+        public string UserName
+        {
+            get { return _userName; }
+            set { 
+                _userName = value;
+                RaisePropertyChanged("UserName");
+            }
+        }
+
+        private DateTime _createdDate;
+        /// <summary>
+        /// 
+        /// </summary>
+        public DateTime CreatedDate
+        {
+            get { return _createdDate; }
+            set { 
+                _createdDate = value;
+                RaisePropertyChanged("CreatedDate");
+                RaisePropertyChanged("DateString");
+            }
+        }
+        
+
+        public string DateString
+        {
+            get { return CreatedDate.ToShortDateString(); }
+            set {}
+        }
+        
         
         
     }

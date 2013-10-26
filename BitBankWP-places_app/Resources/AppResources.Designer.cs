@@ -115,6 +115,15 @@ namespace BitBankWP_places_app.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Комментарий.
+        /// </summary>
+        public static string ItemComment {
+            get {
+                return ResourceManager.GetString("ItemComment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Описание:.
         /// </summary>
         public static string ItemDescription {

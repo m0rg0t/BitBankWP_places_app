@@ -35,7 +35,8 @@ namespace BitBankWP_places_app.Pages
             Map item = new Map();
             //item.Center
             try
-            {
+            {                
+                LoadingComments();
                 /*PlaceMap.Center.Latitude = ViewModelLocator.MainStatic.CurrentItem.Lon;
                 PlaceMap.Center.Longitude = ViewModelLocator.MainStatic.CurrentItem.Lat;
                 var i = PlaceMap.Center;
@@ -47,6 +48,14 @@ namespace BitBankWP_places_app.Pages
             catch { };
         }
 
+        public async void LoadingComments() {
+            try
+            {
+                await ViewModelLocator.MainStatic.CurrentItem.LoadComments();
+                //this.CommentsList.ItemsSource = ViewModelLocator.MainStatic.CurrentItem.CommentItems;
+            }
+            catch { };
+        }
 
         private GeoCoordinate MyCoordinate = null;
         private ReverseGeocodeQuery MyReverseGeocodeQuery = null;
@@ -162,6 +171,23 @@ namespace BitBankWP_places_app.Pages
             overlay.GeoCoordinate = new GeoCoordinate(MyCoordinate.Latitude, MyCoordinate.Longitude);
             overlay.PositionOrigin = new Point(0.5, 0.5);
             mapLayer.Add(overlay);
+        }
+
+        private void AppBarCommentButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (ViewModelLocator.MainStatic.User.IsLogged)
+                {
+                    this.NavigationService.Navigate(new Uri("/Pages/AddCommentPage.xaml", UriKind.Relative));
+                }
+                else
+                {
+                    MessageBox.Show("Для добавления отзыва вы должны авторизоваться.");
+                    this.NavigationService.Navigate(new Uri("/Pages/FacebookLoginPage.xaml", UriKind.Relative));
+                };
+            }
+            catch { };
         }
 
         // Sample code for building a localized ApplicationBar

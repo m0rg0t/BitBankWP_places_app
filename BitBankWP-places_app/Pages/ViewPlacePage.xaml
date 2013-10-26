@@ -18,14 +18,13 @@
                             xmlns:telerikData="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Data"
                             xmlns:telerikPrimitives="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Primitives"
                             xmlns:telerikCore="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Core"
-    
-                            shell:SystemTray.IsVisible="{Binding Loading}"
-                            shell:SystemTray.Opacity="0"
                             
+                            shell:SystemTray.IsVisible="{Binding Main.Loading, Source={StaticResource Locator}}"
+                            shell:SystemTray.Opacity="0"                            
                             DataContext="{Binding Main.CurrentItem, Source={StaticResource Locator}}">
 	<phone:PhoneApplicationPage.ApplicationBar>
 		<shell:ApplicationBar>
-			<shell:ApplicationBarIconButton x:Name="AppBarCommentButton" IconUri="/Assets/AppBar/add.png" Text="Добавить"/>
+			<shell:ApplicationBarIconButton x:Name="AppBarCommentButton" IconUri="/Assets/AppBar/add.png" Text="Добавить" Click="AppBarCommentButton_Click"/>
 			<!--<shell:ApplicationBarIconButton x:Name="AppBarPhotoButton" IconUri="/Assets/AppBar/feature.camera.png" Text="Фото" IsEnabled="True"/>-->
 		</shell:ApplicationBar>
 	</phone:PhoneApplicationPage.ApplicationBar>
@@ -133,16 +132,23 @@
                 <phone:PanoramaItem.Header>
                     <TextBlock Text="Комментарии" FontSize="60"/>
                 </phone:PanoramaItem.Header>
+                <!--
+                ItemTemplate="{StaticResource CommentItem}" 
+                
+                ItemsSource="{Binding CommentItems}"
+                DataContext="{Binding Main.CurrentItem, Source={StaticResource Locator}}" 
+                -->
                 <Grid Margin="10,-30,0,0">
                     <telerikData:RadJumpList 
                         Margin="0,0,0,0" Width="Auto"                
-                        x:Name="CommentsList"                                          
-                        ItemsSource="{Binding Path=CommentItems}"
-                        ItemTemplate="{StaticResource PlaceItem}"
-                        DataContext="{Binding Main, Source={StaticResource Locator}}" 
+                        Name="CommentsList"
+                        ItemsSource="{Binding CommentItems}"
+                        DataContext="{Binding Main.CurrentItem, Source={StaticResource Locator}}" 
                         VerticalAlignment="Stretch"
                         HorizontalContentAlignment="Left" HorizontalAlignment="Stretch" 
-                        EmptyContent="{Binding Path=LocalizedResources.NoData, Source={StaticResource LocalizedStrings}}">
+                        EmptyContent="{Binding Path=LocalizedResources.NoData, 
+                            Source={StaticResource LocalizedStrings}}" 
+                        ItemTemplate="{StaticResource CommentItem}">
                     </telerikData:RadJumpList>
                 </Grid>
             </phone:PanoramaItem>

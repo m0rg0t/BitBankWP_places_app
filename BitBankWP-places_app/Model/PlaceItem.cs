@@ -8,6 +8,8 @@ using Microsoft.Phone.Maps.Controls;
 using System.Device.Location;
 using System.Windows.Media.Imaging;
 using Parse;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace BitBankWP_places_app.Model
 {
@@ -219,8 +221,58 @@ namespace BitBankWP_places_app.Model
                 RaisePropertyChanged("GeoPoint");
             }
         }
-        
-        
+
+        private List<CommentItem> _commentItems;
+        /// <summary>
+        /// Комментарии к записи
+        /// </summary>
+        public List<CommentItem> CommentItems
+        {
+            get { return _commentItems; }
+            set
+            {
+                _commentItems = value;
+                RaisePropertyChanged("CommentItems");
+            }
+        }
+
+        public async Task<bool> LoadComments()
+        {
+            try
+            {
+                // Create a query for places
+                var query = from comment in ParseObject.GetQuery("Comment")
+                            where comment.Get<string>("placeId") == this.ObjectId.ToString()
+                            select comment;
+                query = query.Limit(80);
+                IEnumerable<ParseObject> results = await query.FindAsync();
+                this.CommentItems = new List<CommentItem>();
+                var commentsList = new List<CommentItem>();
+                foreach (var item in results)
+                {
+                    try
+                    {
+                        //AddPlaceFromParseObject(item, "search");
+                        var cItem = new CommentItem();
+                        cItem.UserId = item.Get<string>("userId");
+                        cItem.Comment = item.Get<string>("comment");
+                        cItem.UserName = item.Get<string>("userName");
+                        cItem.UserImage = item.Get<string>("userImage");
+                        cItem.PlaceId = item.Get<string>("placeId");
+                        cItem.ObjectId = item.ObjectId.ToString();
+                        cItem.CreatedDate = item.CreatedAt.Value;
+                        commentsList.Add(cItem);
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(ex.ToString());
+                    };
+                };
+                this.CommentItems = commentsList;
+            }
+            catch { };
+            return true;
+        }
 
     }
 }

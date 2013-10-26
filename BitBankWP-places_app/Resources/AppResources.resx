@@ -179,4 +179,7 @@
   <data name="ProfileTitle" xml:space="preserve">
     <value>Профиль</value>
   </data>
+  <data name="ItemComment" xml:space="preserve">
+    <value>Комментарий</value>
+  </data>
 </root>

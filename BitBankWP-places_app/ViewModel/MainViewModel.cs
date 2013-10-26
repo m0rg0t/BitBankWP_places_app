@@ -160,7 +160,21 @@ namespace BitBankWP_places_app.ViewModel
                 _nearestImages = value;
                 RaisePropertyChanged("NearestImages");
             }
-        }        
+        }
+
+        private CommentItem _newComment = new CommentItem();
+        /// <summary>
+        /// 
+        /// </summary>
+        public CommentItem NewComment
+        {
+            get { return _newComment; }
+            set { 
+                _newComment = value;
+                RaisePropertyChanged("NewComment");
+            }
+        }
+        
 
         private ObservableCollection<PlaceItem> _placeItems = new ObservableCollection<PlaceItem>();
         /// <summary>
@@ -365,6 +379,31 @@ namespace BitBankWP_places_app.ViewModel
                 ViewModelLocator.MainStatic.PlaceItems.Add(item);
             }
             catch(Exception ex) {
+                Debug.WriteLine(ex.ToString());
+            };
+            this.Loading = false;
+            return true;
+        }
+
+        public async Task<bool> SaveCommentToParse(CommentItem item)
+        {
+            this.Loading = true;
+            try
+            {
+                ParseObject place = new ParseObject("Comment");
+                place["comment"] = item.Comment;
+                place["placeId"] = item.PlaceId;
+                place["userId"] = ViewModelLocator.MainStatic.User.ObjectId;
+
+                place["userImage"] = ViewModelLocator.MainStatic.User.UserImage;
+                place["userName"] = ViewModelLocator.MainStatic.User.Username;
+
+                await place.SaveAsync();
+
+                ViewModelLocator.MainStatic.CurrentItem.CommentItems.Add(item);
+            }
+            catch (Exception ex)
+            {
                 Debug.WriteLine(ex.ToString());
             };
             this.Loading = false;
