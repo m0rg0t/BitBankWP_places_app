@@ -10,6 +10,7 @@ using Microsoft.Phone.Shell;
 using BitBankWP_places_app.Resources;
 using BitBankWP_places_app.ViewModel;
 using Parse;
+using ButtonLibrary;
 
 namespace BitBankWP_places_app
 {
@@ -20,6 +21,8 @@ namespace BitBankWP_places_app
         /// </summary>
         /// <returns>The root frame of the Phone Application.</returns>
         public static PhoneApplicationFrame RootFrame { get; private set; }
+
+        public static ProfitButtonControl button = new ProfitButtonControl();
 
         /// <summary>
         /// Constructor for the Application object.

@@ -420,7 +420,9 @@ namespace BitBankWP_places_app.ViewModel
             await GetCurrentCoordinate();
             try
             {
+                //App.button.Open();
                 await LoadNearPlaces();
+                App.button.Open();
             }
             catch { };
             this.Loading = false;

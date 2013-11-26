@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2012/deployment" AppPlatformVersion="8.0">
-  <DefaultLanguage xmlns="" code="en-US" />
-  <App xmlns="" ProductID="{cbe842ae-c7ed-4712-bce3-3f50a4da136b}" Title="места BitBank" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="BitBankWP_places_app author" Description="места BitBank" Publisher="BitBankWP_places_app" PublisherID="{37e42707-84b8-41b8-afee-3c18bc1156b9}">
+  <DefaultLanguage xmlns="" code="ru-RU" />
+  <Languages xmlns="">
+    <Language code="ru-RU" />
+  </Languages>
+  <App xmlns="" ProductID="{6fce2358-4afb-487a-abe7-f56517078bc2}" Title="места BitBank" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="BitBankWP_places_app author" Description="места BitBank" Publisher="BitBankWP_places_app" PublisherID="{37e42707-84b8-41b8-afee-3c18bc1156b9}">
     <IconPath IsRelative="true" IsResource="false">Assets\ApplicationIcon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_NETWORKING" />
