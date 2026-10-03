@@ -121,6 +121,7 @@ namespace BitBankWP_places_app.Model
             set { 
                 _lat = value;
                 RaisePropertyChanged("Lat");
+                RaisePropertyChanged("Position");
                 RaisePropertyChanged("GeoPoint");
             }
         }
@@ -136,6 +137,7 @@ namespace BitBankWP_places_app.Model
             set { 
                 _lon = value;
                 RaisePropertyChanged("Lon");
+                RaisePropertyChanged("Position");
                 RaisePropertyChanged("GeoPoint");
             }
         }
@@ -206,7 +208,6 @@ namespace BitBankWP_places_app.Model
             }
         }
 
-        private ParseGeoPoint _geoPoint = new ParseGeoPoint();
         /// <summary>
         /// 
         /// </summary>
@@ -217,8 +218,8 @@ namespace BitBankWP_places_app.Model
                 return _geoPoint;
             }
             set { 
-                _geoPoint = value;
-                RaisePropertyChanged("GeoPoint");
+                Lat = value.Latitude;
+                Lon = value.Longitude;
             }
         }
 
@@ -276,3 +277,4 @@ namespace BitBankWP_places_app.Model
 
     }
 }
+
